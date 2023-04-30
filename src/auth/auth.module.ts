@@ -12,7 +12,7 @@ dotenv.config();
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET, // Also used in guard
-      signOptions: { expiresIn: '1d' }, // TODO: Increase this value for signing users in. 1 day is fine.
+      signOptions: { expiresIn: '3d' }, // TODO: Increase this value for signing users in. 1 day is fine.
     })
   ],
   controllers: [AuthController],
