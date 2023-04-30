@@ -9,16 +9,21 @@ import { WordsModule } from './words/words.module';
 import { Word } from './words/entities/word.entity';
 import { GamesModule } from './games/games.module';
 import { Game } from './games/entities/game.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../..', 'client'),
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'homepc2021!!',
-      database: 'wordle-wisdom',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [User, Word, Game],
       synchronize: true, // TODO: Remove on production
     }),
@@ -30,4 +35,5 @@ import { Game } from './games/entities/game.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {
+}
